@@ -10,17 +10,17 @@ suite('Unit Tests', function(){
     assert.equal(convertHandler.getNum('4.5mi'), 4.5, 'getNum is not working with decimal numbers');
     assert.equal(convertHandler.getNum('4/5mi'), 4/5, 'getNum is not working with fractions numbers');
     assert.equal(convertHandler.getNum('4/5.5mi'), 4/5.5, 'getNum is not working with fractional decimal numbers');
-    assert.equal(convertHandler.getNum('4/5/7mi'), 'not valid number', 'getNum is not working with two / numbers');
+    assert.equal(convertHandler.getNum('4/5/7mi'), 'invalid number', 'getNum is not working with two / numbers');
     assert.equal(convertHandler.getNum('mi'), 1, '1 is returned for no number mentioned');
    })
 
    test('ConvertHandler can handle units', ()=>{
     assert.equal(convertHandler.getUnit('45mi'), 'mi', 'getUnit is not working');
     assert.equal(convertHandler.getUnit('4.5kg'), 'kg', 'getUnit is not working');
-    assert.equal(convertHandler.getUnit('4/5km'), 'km', 'getUnit is not working');
-    assert.equal(convertHandler.getUnit('4/5.5L'), 'L', 'getUnit is not working');
-    assert.equal(convertHandler.getUnit('mi'), 'mi', 'getUnit is not working');
-    assert.equal(convertHandler.getUnit('46kvo'), 'not valid unit', 'getUnit is not working');
+    assert.equal(convertHandler.getUnit('4/5kM'), 'km', 'getUnit is not working');
+    assert.equal(convertHandler.getUnit('4/5.5l'), 'L', 'getUnit is not working');
+    assert.equal(convertHandler.getUnit('mI'), 'mi', 'getUnit is not working');
+    assert.equal(convertHandler.getUnit('46kvo'), 'invalid unit', 'getUnit is not working');
    })
 
    test('ConvertHandler can return the correct return units', ()=>{
@@ -29,7 +29,7 @@ suite('Unit Tests', function(){
     assert.equal(convertHandler.getReturnUnit('km'), 'mi');
     assert.equal(convertHandler.getReturnUnit('L'), 'gal');
     assert.equal(convertHandler.getReturnUnit('gal'), 'L');
-    assert.equal(convertHandler.getReturnUnit('kvo'), 'not valid unit');
+    assert.equal(convertHandler.getReturnUnit('kvo'), 'invalid unit');
    })
 
    test('ConvertHandler can can spell units', ()=>{
@@ -38,7 +38,7 @@ suite('Unit Tests', function(){
       assert.equal(convertHandler.spellOutUnit('km'), 'kilometers');
       assert.equal(convertHandler.spellOutUnit('L'), 'liters');
       assert.equal(convertHandler.spellOutUnit('gal'), 'gallons');
-      assert.equal(convertHandler.spellOutUnit('kvo'), 'not valid unit');
+      assert.equal(convertHandler.spellOutUnit('kvo'), 'invalid unit');
      })
 
      test('ConvertHandler can return correct conversion results', ()=>{

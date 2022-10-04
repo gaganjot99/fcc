@@ -3,10 +3,10 @@ function ConvertHandler() {
   this.getNum = function(input) {
     if(input.includes('/')){
       if(input.split('/').length > 2){
-        return 'not valid number'
+        return 'invalid number'
       }
     }
-    let result = eval(input.split(/[a-z]+/)[0])
+    let result = eval(input.split(/[a-zA-Z]+/)[0])
     if(result == undefined){
       return 1;
     }
@@ -14,9 +14,12 @@ function ConvertHandler() {
   };
   
   this.getUnit = function(input) {
-    let result = input.match(/[a-zA-Z]+$/)[0]
+    let result = input.match(/[a-zA-Z]+$/)[0].toLowerCase()
+    if(result == 'l'){
+    result = 'L'
+    }
     if(!['mi','km','L','gal','lbs','kg'].includes(result)){
-      return 'not valid unit'
+      return 'invalid unit'
     }
     return result;
   };
@@ -36,7 +39,7 @@ function ConvertHandler() {
       case 'gal':
         return 'L'
       default:
-        return 'not valid unit'
+        return 'invalid unit'
     }
   };
 
@@ -55,7 +58,7 @@ function ConvertHandler() {
       case 'gal':
         return 'gallons'
       default:
-        return 'not valid unit'
+        return 'invalid unit'
     }
   };
   
@@ -63,6 +66,16 @@ function ConvertHandler() {
     const galToL = 3.78541;
     const lbsToKg = 0.453592;
     const miToKm = 1.60934;
+    if(initNum=='invalid number' && initUnit == 'invalid unit'){
+      return 'invalid number and unit'
+    }
+    if(initNum == 'invalid number'){
+      return 'invalid number'
+    }
+    if(initUnit == 'invalid unit'){
+      return 'invalid unit'
+    }
+
     switch (initUnit){
       case 'mi':
         return parseFloat((initNum*miToKm).toFixed(5))+'km'
@@ -77,11 +90,14 @@ function ConvertHandler() {
       case 'gal':
         return parseFloat((initNum*galToL).toFixed(5))+'L'
       default:
-        return 'not valid unit'
+        return 'invalid unit'
     }
   };
   
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
+    if(['invalid number and unit', 'invalid number', 'invalid unit'].includes(this.convert(initNum, initUnit))){
+      return this.convert(initNum, initUnit)
+    }
     return `${initNum} ${this.spellOutUnit(initUnit)} converts to ${returnNum} ${this.spellOutUnit(returnUnit)}`;
     
   };
