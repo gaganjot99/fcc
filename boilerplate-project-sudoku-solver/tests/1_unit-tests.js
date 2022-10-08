@@ -7,7 +7,7 @@ let solver = new Solver();
 const puzzle =
   "1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.";
 
-/* representation of above demo sudoku string
+/* representation of above valid sudoku string
 
         1  2  3  4  5  6  7  8  9
        
@@ -23,14 +23,30 @@ const puzzle =
   
   */
 
-// 27 28 29   9*(n-1)+(n%3-1)*3 = 9n -9 +       math.floor(n\3)*3, +1 +2  (region -1)%3*3
-// 36 37 38   9*n
-// 45 46 47   9*(n+1)
+const solution =
+  "135762984946381257728459613694517832812936745357824196473298561581673429269145378";
+const puzzleWithInvalidChar =
+  "1.5..2.8R..63.12.7.2..5..H..9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.";
+const puzzleLessChar =
+  "1.5..2.84..63.12.7.2..5....3674.3.7.2..9.47...8..1..16....926914.37.";
+const puzzleMoreChar =
+  "1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....9269.34.2.3423...14.37.";
+
+const invalidPuzzle =
+  "155..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.";
 
 suite("Unit Tests", () => {
-  test.skip("Logic handles a valid puzzle string of 81 characters", () => {});
-  test.skip("Logic handles a puzzle string with invalid characters (not 1-9 or .)", () => {});
-  test.skip("Logic handles a puzzle string that is not 81 characters in length", () => {});
+  test("Logic handles a valid puzzle string of 81 characters", () => {
+    assert.equal(solver.validate(puzzle), true);
+  });
+  test("Logic handles a puzzle string with invalid characters (not 1-9 or .)", () => {
+    assert.equal(solver.validate(puzzleWithInvalidChar), "invalid chars found");
+  });
+  test("Logic handles a puzzle string that is not 81 characters in length", () => {
+    assert.equal(solver.validate(puzzleLessChar), "less than 81");
+
+    assert.equal(solver.validate(puzzleMoreChar), "greater than 81");
+  });
   test("Logic handles a valid row placement", () => {
     assert.equal(solver.checkRowPlacement(puzzle, "A", 4, 3), true);
     assert.equal(solver.checkRowPlacement(puzzle, "A", 3, 5), true);
@@ -62,7 +78,13 @@ suite("Unit Tests", () => {
     assert.equal(solver.checkRegionPlacement(puzzle, "H", 1, 7), false);
     assert.equal(solver.checkRegionPlacement(puzzle, "D", 8, 7), false);
   });
-  test.skip("Valid puzzle strings pass the solver", () => {});
-  test.skip("Invalid puzzle strings fail the solver", () => {});
-  test.skip("Solver returns the expected solution for an incomplete puzzle", () => {});
+  test("Valid puzzle strings pass the solver", () => {
+    assert.equal(solver.solve(puzzle), solution);
+  });
+  test("Invalid puzzle strings fail the solver", () => {
+    assert.equal(solver.solve(invalidPuzzle), "invalid string");
+  });
+  test("Solver returns the expected solution for an incomplete puzzle", () => {
+    assert.equal(solver.solve(puzzle), solution);
+  });
 });

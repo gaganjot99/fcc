@@ -1,5 +1,17 @@
 class SudokuSolver {
-  validate(puzzleString) {}
+  validate(puzzleString) {
+    if (puzzleString.length < 81) {
+      return "less than 81";
+    }
+    if (puzzleString.length > 81) {
+      return "greater than 81";
+    }
+    let puzzlearray = puzzleString.split("");
+    if (!puzzlearray.every((element) => /[1-9.]/.test(element))) {
+      return "invalid chars found";
+    }
+    return true;
+  }
 
   checkRowPlacement(puzzleString, row, column, value) {
     let rowCord = [
@@ -58,7 +70,57 @@ class SudokuSolver {
     return true;
   }
 
-  solve(puzzleString) {}
+  solve(puzzleString) {
+    let puzzlearray = puzzleString.split("");
+    for (let i = 0; i < puzzlearray.length; i++) {
+      let element = puzzlearray[i];
+      if (element == ".") {
+        continue;
+      }
+      let row = "ABCDEFGHI"[Math.floor(i / 9)];
+      let col = (i % 9) + 1;
+      if (
+        this.checkRowPlacement(puzzleString, row, col, element) &&
+        this.checkColPlacement(puzzleString, row, col, element) &&
+        this.checkRegionPlacement(puzzleString, row, col, element)
+      ) {
+        continue;
+      } else {
+        return "invalid string";
+      }
+    }
+
+    let f1 = this.checkRowPlacement;
+    let f2 = this.checkColPlacement;
+    let f3 = this.checkRegionPlacement;
+
+    function backtrac(arr) {
+      for (let i = 0; i < 81; i++) {
+        if (arr[i] == ".") {
+          let row = "ABCDEFGHI"[Math.floor(i / 9)];
+          let col = (i % 9) + 1;
+          for (let j = 1; j <= 9; j++) {
+            if (
+              f1(arr.join(""), row, col, j) &&
+              f2(arr.join(""), row, col, j) &&
+              f3(arr.join(""), row, col, j)
+            ) {
+              arr[i] = j;
+              if (backtrac(arr)) {
+                return true;
+              } else {
+                arr[i] = ".";
+              }
+            }
+          }
+          return false;
+        }
+      }
+      return true;
+    }
+    backtrac(puzzlearray);
+    return puzzlearray.join("");
+  }
 }
 
 module.exports = SudokuSolver;
