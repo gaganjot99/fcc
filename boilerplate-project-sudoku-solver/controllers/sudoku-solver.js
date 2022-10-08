@@ -1,14 +1,11 @@
 class SudokuSolver {
   validate(puzzleString) {
-    if (puzzleString.length < 81) {
-      return "less than 81";
-    }
-    if (puzzleString.length > 81) {
-      return "greater than 81";
+    if (puzzleString.length !== 81) {
+      return "Expected puzzle to be 81 characters long";
     }
     let puzzlearray = puzzleString.split("");
     if (!puzzlearray.every((element) => /[1-9.]/.test(element))) {
-      return "invalid chars found";
+      return "Invalid characters in puzzle";
     }
     return true;
   }
@@ -86,7 +83,7 @@ class SudokuSolver {
       ) {
         continue;
       } else {
-        return "invalid string";
+        return "Puzzle cannot be solved";
       }
     }
 

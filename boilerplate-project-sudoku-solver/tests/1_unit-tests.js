@@ -40,12 +40,21 @@ suite("Unit Tests", () => {
     assert.equal(solver.validate(puzzle), true);
   });
   test("Logic handles a puzzle string with invalid characters (not 1-9 or .)", () => {
-    assert.equal(solver.validate(puzzleWithInvalidChar), "invalid chars found");
+    assert.equal(
+      solver.validate(puzzleWithInvalidChar),
+      "Invalid characters in puzzle"
+    );
   });
   test("Logic handles a puzzle string that is not 81 characters in length", () => {
-    assert.equal(solver.validate(puzzleLessChar), "less than 81");
+    assert.equal(
+      solver.validate(puzzleLessChar),
+      "Expected puzzle to be 81 characters long"
+    );
 
-    assert.equal(solver.validate(puzzleMoreChar), "greater than 81");
+    assert.equal(
+      solver.validate(puzzleMoreChar),
+      "Expected puzzle to be 81 characters long"
+    );
   });
   test("Logic handles a valid row placement", () => {
     assert.equal(solver.checkRowPlacement(puzzle, "A", 4, 3), true);
@@ -82,7 +91,7 @@ suite("Unit Tests", () => {
     assert.equal(solver.solve(puzzle), solution);
   });
   test("Invalid puzzle strings fail the solver", () => {
-    assert.equal(solver.solve(invalidPuzzle), "invalid string");
+    assert.equal(solver.solve(invalidPuzzle), "Puzzle cannot be solved");
   });
   test("Solver returns the expected solution for an incomplete puzzle", () => {
     assert.equal(solver.solve(puzzle), solution);
