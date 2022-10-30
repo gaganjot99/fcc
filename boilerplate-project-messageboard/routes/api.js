@@ -1,4 +1,5 @@
 'use strict';
+const db = require('./db')
 
 module.exports = function (app) {
   
