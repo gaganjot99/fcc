@@ -44,7 +44,7 @@ return new Promise((res, rej)=>{
     if(err){
       rej(err)
     }
-    res("Data added successfully")
+    res("success")
   })
 })
 }
