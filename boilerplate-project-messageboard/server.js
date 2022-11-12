@@ -7,8 +7,19 @@ const cors        = require('cors');
 const apiRoutes         = require('./routes/api.js');
 const fccTestingRoutes  = require('./routes/fcctesting.js');
 const runner            = require('./test-runner');
+const helmet = require("helmet");
 
 const app = express();
+
+app.use(helmet.frameguard({action: 'sameorigin'}));
+app.use(helmet.dnsPrefetchControl())
+app.use(
+  helmet.referrerPolicy({
+    policy: ["origin","same-origin"],
+  })
+);
+app.use(helmet({ crossOriginResourcePolicy: { policy: "same-site" } }));
+app.use(helmet.contentSecurityPolicy({directives: {defaultSrc: ["'self'"], scriptSrc: ["'self'"], styleSrc: ["'self'"]}}))
 
 app.use('/public', express.static(process.cwd() + '/public'));
 

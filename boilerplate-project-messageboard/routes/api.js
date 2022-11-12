@@ -1,5 +1,5 @@
 'use strict';
-const db = require('./db')
+const {db, addBoard, addReply, deleteThread, deleteReply, getThread, getThreads, getReplies, reportThread, reportReply} = require('./db')
 
 module.exports = function (app) {
   

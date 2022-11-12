@@ -31,7 +31,7 @@ const createTables = () => {
             //addBoard({board: "first", text: "initail text", password: "1234"}).then(data=>console.log(data))
             //deleteThread(1, '134').then(data=>console.log(data))
             //addReply({id:3, text: "hello", password: "3232"}).then(data=>console.log(data))
-            getThread(3).then(data=>console.log(data))
+            //getThread(3).then(data=>console.log(data))
             //getReplies(3).then(data=>console.log(data))
           }
         );
@@ -170,4 +170,4 @@ const reportReply = (id) => {
   })
 }
 
-module.exports = {db, addBoard, addReply, deleteThread, deleteReply}
+module.exports = {db, addBoard, addReply, deleteThread, deleteReply, getThread, getThreads, getReplies, reportThread, reportReply}
